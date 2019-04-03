@@ -18,6 +18,7 @@ import { Volvo } from '../imports/api/collections'
 WebApp.connectHandlers.use('/volvo', (req, res, next) => {
     res.writeHead(200);
     let volvoRes = Volvo.findOne()
-    console.log(req);
+    console.log("req.heades:",req.heades);
+    console.log("req.head:",req.head);
     res.end(JSON.stringify(volvoRes));
 });
