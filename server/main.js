@@ -17,5 +17,7 @@ import { Volvo } from '../imports/api/collections'
 // Listen to incoming HTTP requests (can only be used on the server).
 WebApp.connectHandlers.use('/volvo', (req, res, next) => {
     res.writeHead(200);
-    res.end(Volvo.findOne());
+    let volvoRes = Volvo.findOne()
+
+    res.end(volvoRes.toString());
 });
