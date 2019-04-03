@@ -19,5 +19,5 @@ WebApp.connectHandlers.use('/volvo', (req, res, next) => {
     res.writeHead(200);
     let volvoRes = Volvo.findOne()
 
-    res.end(volvoRes.toString());
+    res.end(JSON.stringify(volvoRes));
 });
