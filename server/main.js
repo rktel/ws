@@ -22,6 +22,7 @@ WebApp.connectHandlers.use('/volvo', (req, res, next) => {
     
     res.writeHead(200);
     res.end(`Hello world : ${username}`)
+    console.log(req.query);
   }else{
     res.writeHead(401);
     res.end(`Unauthorized`)
