@@ -18,7 +18,10 @@ import { Volvo } from '../imports/api/collections'
 WebApp.connectHandlers.use('/volvo', (req, res, next) => {
     res.writeHead(200);
     console.log(req.headers);
+    console.log(req.headers.authorization);
+    
+    /*
     const atob = str => Buffer.from(str, 'base64').toString('binary');
     console.log(atob(req.headers.authorization.split(' ')[1]));
-    
+    */
 });
