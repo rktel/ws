@@ -23,7 +23,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
     res.writeHead(200);
     res.end(`Hello world : ${username}`)
-    console.log(req.body);
+    console.log(req);
     console.log(req.query);
   } else {
     res.writeHead(401);
