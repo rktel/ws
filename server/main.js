@@ -17,12 +17,13 @@ import { Credentials, Volvo } from '../imports/api/collections'
 //  400	Bad Request
 // 401	Unauthorized
 // Listen to incoming HTTP requests (can only be used on the server).
-WebApp.connectHandlers.use('/volvo', (req, res, next) => {
+WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
   const { username, password } = getCredentials(req)
   if (username == 'volvo' && password == 'vlv_scrts_04_2019') {
 
     res.writeHead(200);
     res.end(`Hello world : ${username}`)
+    console.log(req.body);
     console.log(req.query);
   } else {
     res.writeHead(401);
