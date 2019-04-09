@@ -23,10 +23,11 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
     res.writeHead(200);
 
-    const queries = Object.keys(req.query).length > 0? req.query : false
-    if(queries){
-      console.log('hello');
-      
+    const queries = Object.keys(req.query).length > 0 ? req.query : false
+    if (queries) {
+      console.log(queries);
+      res.end(queries)
+
     }
 
   } else {
