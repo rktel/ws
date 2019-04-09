@@ -53,6 +53,9 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         }else if(vehicle && vehicle.length >= 5 && vehicle.length <= 7){
           console.log('Return Last Event of plate');
         //  db.market.find({}).sort({_id:-1}).limit(1)
+        }else{
+          res.writeHead(401);
+          res.end(`Unauthorized`)          
         }
 
 
