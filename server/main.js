@@ -33,8 +33,15 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         console.log('3', queries);
         res.end(JSON.stringify(queries))
       } else if (Object.keys(queries).length == 1 && queries.hasOwnProperty('vehicle')) {
+
         console.log('1', queries);
         res.end(JSON.stringify(queries))
+
+        const vehicle = queries.vehicle
+        console.log('vehicle:', vehicle);
+        
+
+
       } else {
         res.writeHead(401);
         res.end(`Unauthorized`)
