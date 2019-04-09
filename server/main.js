@@ -30,10 +30,10 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       // Respuesta hacia el cliente Web
 
       if (queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
-        console.log(queries);
+        console.log('3',queries);
         res.end(JSON.stringify(queries))
       } else if (queries.hasOwnProperty('vehicle')) {
-        console.log(queries);
+        console.log('1',queries);
         res.end(JSON.stringify(queries))
       } else {
         res.writeHead(401);
