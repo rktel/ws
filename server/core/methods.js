@@ -10,7 +10,7 @@ Meteor.methods({
         // db.products.find( { description: { $regex: /S/ } } )
         console.log(str);
 
-        const plate = await Volvo.find({ 'events.vehicle': new RegExp(str, 'i') }, { sort: { _id: 1 }, limit: 1 }).fetch()
+        const plate = await Volvo.find({ 'events.vehicle': new RegExp(str, 'i') }, { sort: { _id: -1 }, limit: 1 }).fetch()
         return plate
     },
 });
