@@ -1,6 +1,6 @@
 import { Volvo } from '../../imports/api/collections'
 
-Meteor.methods({ 
+Meteor.methods({
     async Volvo_getPlates() {
         const plates = await Volvo.rawCollection().distinct('events.vehicle')
         return plates
@@ -9,8 +9,8 @@ Meteor.methods({
         //  db.market.find({}).sort({_id:-1}).limit(1)
         // db.products.find( { description: { $regex: /S/ } } )
         console.log(str);
-        
-        const plate = await Volvo.find({'events.vehicle': str}).fetch()
+
+        const plate = await Volvo.find({ 'events.vehicle': str }, { sort: { _id: -1 }, limit: 1 }).fetch()
         return plate
     },
 });
