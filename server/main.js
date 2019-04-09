@@ -31,11 +31,14 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
       if (queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
         console.log(queries);
-      } else if (queries.hasOwnProperty('vehicle')) { 
+      } else if (queries.hasOwnProperty('vehicle')) {
         console.log(queries);
       }
 
 
+    } else {
+      res.writeHead(401);
+      res.end(`Unauthorized`)
     }
 
   } else {
