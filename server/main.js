@@ -29,11 +29,11 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       // console.log(queries); // Log hacia el servidor
       // Respuesta hacia el cliente Web
 
-      if (queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
-        console.log('3',queries);
+      if (Object.keys(queries).length == 3 && queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
+        console.log('3', queries);
         res.end(JSON.stringify(queries))
-      } else if (queries.hasOwnProperty('vehicle')) {
-        console.log('1',queries);
+      } else if (Object.keys(queries).length == 1 && queries.hasOwnProperty('vehicle')) {
+        console.log('1', queries);
         res.end(JSON.stringify(queries))
       } else {
         res.writeHead(401);
