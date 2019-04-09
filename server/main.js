@@ -34,16 +34,15 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         res.end(JSON.stringify(queries))
       } else if (Object.keys(queries).length == 1 && queries.hasOwnProperty('vehicle')) {
 
-        console.log('1', queries);
-        res.end(JSON.stringify(queries))
+        
 
-        const vehicle = queries.vehicle
-        console.log('vehicle:', vehicle);
         if( vehicle && vehicle.toLowerCase() == 'all' ){
           console.log('Return all plates');
           Meteor.call('Volvo_getPlates',  function(error, plates) { 
             if (!error) { 
+              plates = { vehicles: plates}
               console.log('plates', plates); 
+              res.end(JSON.stringify(plates))
             } 
   
           });
