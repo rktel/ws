@@ -27,12 +27,17 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
     if (queries) {
       // Se procesa query hacia Collection Volvo
       // console.log(queries); // Log hacia el servidor
-      res.end(JSON.stringify(queries)) // Respuesta hacia el cliente Web
+      // Respuesta hacia el cliente Web
 
       if (queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
         console.log(queries);
+        res.end(JSON.stringify(queries))
       } else if (queries.hasOwnProperty('vehicle')) {
         console.log(queries);
+        res.end(JSON.stringify(queries))
+      } else {
+        res.writeHead(401);
+        res.end(`Unauthorized`)
       }
 
 
