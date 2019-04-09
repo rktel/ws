@@ -12,7 +12,7 @@ app.listen(4100, function () {
 });
 */
 
-import { Credentials, Volvo } from '../imports/api/collections'
+import { Credentials, Volvo, Savar } from '../imports/api/collections'
 // aladdin:opensesame  ==>  YWxhZGRpbjpvcGVuc2VzYW1l
 //  400	Bad Request
 // 401	Unauthorized
@@ -22,8 +22,10 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
   if (username == 'volvo' && password == 'vlv_scrts_04_2019') {
 
     res.writeHead(200);
+    console.log(req.param);
+    console.log(req.query);
+    
     res.end(`Hello world : ${username}`)
-    console.log(req.path);
     console.log(req.query);
   } else {
     res.writeHead(401);
