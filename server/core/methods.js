@@ -8,7 +8,9 @@ Meteor.methods({
     async Volvo_getOnePlate(str) {
         //  db.market.find({}).sort({_id:-1}).limit(1)
         // db.products.find( { description: { $regex: /S/ } } )
-        const plate = await Volvo.rawCollection().find({'events.vehicle': 'F3V841'}).fetch()
+        console.log(str);
+        
+        const plate = await Volvo.rawCollection().findOne({'events.vehicle': 'F3V841'})
         return plate
     },
 });
