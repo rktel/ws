@@ -39,7 +39,12 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
         const vehicle = queries.vehicle
         console.log('vehicle:', vehicle);
-        
+        if( vehicle && vehicle.toLowerCase() == 'all' ){
+          console.log('Return all plates');
+          
+        }else if(vehicle && vehicle.length >= 5 && vehicle.length <= 6){
+          console.log('Return Last Event of plate');
+        }
 
 
       } else {
