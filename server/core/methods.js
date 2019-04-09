@@ -10,7 +10,7 @@ Meteor.methods({
         // db.products.find( { description: { $regex: /S/ } } )
         console.log(str);
         
-        const plate = await Volvo.rawCollection().findOne({'events.vehicle': 'F3V841'})
+        const plate = await Volvo.rawCollection().find({'events.vehicle': str}).fetch()
         return plate
     },
 });
