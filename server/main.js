@@ -54,7 +54,9 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
           console.log('Return Last Event of plate');
           Meteor.call('Volvo_getOnePlate', vehicle, function(error, plate) { 
             if (!error) { 
+              plate = plate[0]
               console.log(plate); 
+              res.end(JSON.stringify(plate))
             } 
           });
         }else{
