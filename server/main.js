@@ -41,9 +41,16 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         console.log('vehicle:', vehicle);
         if( vehicle && vehicle.toLowerCase() == 'all' ){
           console.log('Return all plates');
+          Meteor.call('Volvo_getPlates',  function(error, plates) { 
+            if (!error) { 
+              console.log('plates', plates); 
+            } 
+  
+          });
           
-        }else if(vehicle && vehicle.length >= 5 && vehicle.length <= 6){
+        }else if(vehicle && vehicle.length >= 5 && vehicle.length <= 7){
           console.log('Return Last Event of plate');
+        //  db.market.find({}).sort({_id:-1}).limit(1)
         }
 
 
