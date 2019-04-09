@@ -22,13 +22,13 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
   if (username == 'volvo' && password == 'vlv_scrts_04_2019') {
 
     res.writeHead(200);
-    console.log(req.query);
+
     const queries = Object.keys(req.query).length > 0? req.query : false
     if(queries){
       console.log('hello');
       
     }
-    console.log(req.query);
+
   } else {
     res.writeHead(401);
     res.end(`Unauthorized`)
