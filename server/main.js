@@ -26,7 +26,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
     const queries = Object.keys(req.query).length > 0 ? req.query : false
     if (queries) {
       console.log(queries);
-      res.end(queries)
+      res.end(JSON.stringify(queries))
 
     }
 
