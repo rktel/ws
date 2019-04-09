@@ -25,8 +25,16 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
     const queries = Object.keys(req.query).length > 0 ? req.query : false
     if (queries) {
-      console.log(queries);
-      res.end(JSON.stringify(queries))
+      // Se procesa query hacia Collection Volvo
+      // console.log(queries); // Log hacia el servidor
+      res.end(JSON.stringify(queries)) // Respuesta hacia el cliente Web
+
+      if (queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
+        console.log(queries);
+      } else if (queries.hasOwnProperty('vehicle')) { 
+        console.log(queries);
+      }
+
 
     }
 
