@@ -18,7 +18,11 @@ import { Credentials, Volvo, Savar } from '../imports/api/collections'
 // 401	Unauthorized
 // Listen to incoming HTTP requests (can only be used on the server).
 WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
+
   const { username, password } = getCredentials(req)
+
+  // ##################### IF "VOLVO"      #####################
+
   if (username == 'volvo' && password == 'vlv_scrts_04_2019') {
 
     res.writeHead(200);
@@ -33,7 +37,20 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         console.log('3', queries);
         res.end(JSON.stringify(queries))
 
+        const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
+        const start = Array.isArray(queries.start) ? false : queries.start
+        const end = Array.isArray(queries.end) ? false : queries.end
 
+        if (vehicle && vehicle.length >= 4 && start && start.length == 19 && end && end.length == 19) {
+
+          Meteor.call('Volvo_getRangePlate', vehicle, start, end, function (error, range) {
+            if (!error) {
+
+              console.log('range', range);
+            }
+          });
+
+        }
 
 
 
@@ -62,11 +79,11 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
         }
         /************************* Vehicle == STRING -------------*/
-        else if (vehicle && vehicle.length >= 6 && vehicle.length <= 8) {
+        else if (vehicle && vehicle.length >= 4) {
           console.log('Return Last Event of plate');
           Meteor.call('Volvo_getOnePlate', vehicle, function (error, plate) {
             if (!error) {
-              plate = plate[0]
+              plate = plate.length == 1 ? plate[0] : {}
               console.log('0', plate);
               res.end(JSON.stringify(plate))
             }
@@ -88,7 +105,9 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       res.end(`Unauthorized`)
     }
 
-  } else {
+  } // ***************** FIN DEL IF   "VOLVO" 
+
+  else {
     res.writeHead(401);
     res.end(`Unauthorized`)
   }
