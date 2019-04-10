@@ -10,7 +10,8 @@ Meteor.methods({
         return plate
     },
     async Volvo_getRangePlate(str, start, end) {
-        const range = await Volvo.find({ 'events.vehicle': new RegExp(str, 'i'), 'events.created': { $gte: start, $lte: end } }, { sort: { 'events.created': -1 } })
+        const range = await Volvo.find({ 'events.vehicle': new RegExp(str, 'i'), 'events.created': { $gte: start, $lte: end } }, { sort: { 'events.created': -1 } }).fetch()
+        console.log(range);
         return range
     }
 });
