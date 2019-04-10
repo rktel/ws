@@ -37,31 +37,32 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         //console.log('1', queries);
         //res.end(JSON.stringify(queries))
 
-        const vehicle = queries.vehicle
+        const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
+
         console.log('vehicle:', vehicle);
-        if( vehicle && vehicle.toLowerCase() == 'all' ){
+        if (vehicle && vehicle.toLowerCase() == 'all') {
           console.log('Return all plates');
-          Meteor.call('Volvo_getPlates',  function(error, plates) { 
-            if (!error) { 
-              plates = { vehicles: plates}
-              console.log( plates); 
+          Meteor.call('Volvo_getPlates', function (error, plates) {
+            if (!error) {
+              plates = { vehicles: plates }
+              console.log(plates);
               res.end(JSON.stringify(plates))
-            } 
-  
+            }
+
           });
-          
-        }else if(vehicle && vehicle.length >= 5 && vehicle.length <= 7){
+
+        } else if (vehicle && vehicle.length >= 5 && vehicle.length <= 7) {
           console.log('Return Last Event of plate');
-          Meteor.call('Volvo_getOnePlate', vehicle, function(error, plate) { 
-            if (!error) { 
+          Meteor.call('Volvo_getOnePlate', vehicle, function (error, plate) {
+            if (!error) {
               plate = plate[0]
-              console.log(plate); 
+              console.log(plate);
               res.end(JSON.stringify(plate))
-            } 
+            }
           });
-        }else{
+        } else {
           res.writeHead(401);
-          res.end(`Unauthorized`)          
+          res.end(`Unauthorized`)
         }
 
 
