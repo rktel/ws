@@ -34,8 +34,8 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       // Respuesta hacia el cliente Web
       /************************* 3 PARAMETROS EN EL QUERY ***********************************/
       if (Object.keys(queries).length == 3 && queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
-        console.log('3', queries);
-        res.end(JSON.stringify(queries))
+       // console.log('3', queries);
+       // res.end(JSON.stringify(queries))
 
         const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
         const start = Array.isArray(queries.start) ? false : queries.start
@@ -47,7 +47,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
             if (!error) {
 
               console.log('range', range);
-             // res.end(JSON.stringify(range))
+              res.end(JSON.stringify(range))
             }
           });
 
