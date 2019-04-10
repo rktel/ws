@@ -37,9 +37,10 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         //console.log('1', queries);
         //res.end(JSON.stringify(queries))
 
+        // Verificamos que solo exista un vehicle en el query.
         const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
-
-        console.log('vehicle:', vehicle);
+        // console.log('vehicle:', vehicle);
+        
         if (vehicle && vehicle.toLowerCase() == 'all') {
           console.log('Return all plates');
           Meteor.call('Volvo_getPlates', function (error, plates) {
