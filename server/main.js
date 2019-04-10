@@ -28,11 +28,18 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       // Se procesa query hacia Collection Volvo
       // console.log(queries); // Log hacia el servidor
       // Respuesta hacia el cliente Web
-
+      /************************* 3 PARAMETROS EN EL QUERY ***********************************/
       if (Object.keys(queries).length == 3 && queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
         console.log('3', queries);
         res.end(JSON.stringify(queries))
-      } else if (Object.keys(queries).length == 1 && queries.hasOwnProperty('vehicle')) {
+
+
+
+
+
+      }
+      /************************* 1 PARAMETROS EN EL QUERY ***********************************/
+      else if (Object.keys(queries).length == 1 && queries.hasOwnProperty('vehicle')) {
 
         //console.log('1', queries);
         //res.end(JSON.stringify(queries))
@@ -41,6 +48,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
         // console.log('vehicle:', vehicle);
 
+        /************************* Vehicle == all ----------------*/
         if (vehicle && vehicle.toLowerCase() == 'all') {
           console.log('Return all plates');
           Meteor.call('Volvo_getPlates', function (error, plates) {
@@ -52,12 +60,14 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
           });
 
-        } else if (vehicle && vehicle.length >= 5 && vehicle.length <= 7) {
+        }
+        /************************* Vehicle == STRING -------------*/
+        else if (vehicle && vehicle.length >= 6 && vehicle.length <= 8) {
           console.log('Return Last Event of plate');
           Meteor.call('Volvo_getOnePlate', vehicle, function (error, plate) {
             if (!error) {
               plate = plate[0]
-              console.log('0',plate);
+              console.log('0', plate);
               res.end(JSON.stringify(plate))
             }
           });
