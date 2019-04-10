@@ -47,7 +47,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
             if (!error) {
 
               console.log('range', range);
-              console.log('range', range.length);
+              res.end(JSON.stringify(range))
             }
           });
 
