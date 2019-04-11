@@ -53,7 +53,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
           Meteor.call('Volvo_getRangePlate', vehicle, start, end, function (error, range) {
             if (!error) {
-              console.log('range', range);
+            //  console.log('range', range);
               res.end(JSON.stringify(range))
             }
           });
@@ -78,11 +78,11 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
         /************************* Vehicle == all ----------------*/
         if (vehicle && vehicle.toLowerCase() == 'all') {
-          console.log('Return all plates');
+         // console.log('Return all plates');
           Meteor.call('Volvo_getPlates', function (error, plates) {
             if (!error) {
               plates = { vehicles: plates }
-              console.log(plates);
+             // console.log(plates);
               res.end(JSON.stringify(plates))
             }
 
@@ -91,11 +91,11 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
         }
         /************************* Vehicle == STRING -------------*/
         else if (vehicle && vehicle.length >= 4) {
-          console.log('Return Last Event of plate');
+         // console.log('Return Last Event of plate');
           Meteor.call('Volvo_getOnePlate', vehicle, function (error, plate) {
             if (!error) {
               plate = plate.length == 1 ? plate[0] : {}
-              console.log('0', plate);
+            //  console.log('0', plate);
               res.end(JSON.stringify(plate))
             }
           });
@@ -130,20 +130,20 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
 // helper functions
 const verifyDays = (start, end) => {
-  console.log('verifyDays:');
+ // console.log('verifyDays:');
 
   const addZ = str => str + '.000Z'
   const str2millis = str => (new Date(str)).getTime()
   start = addZ(start)
   end = addZ(end)
 
-  console.log('start & end:', start, end);
-  console.log('str2millis(end):', str2millis(end));
-  console.log('str2millis(start):', str2millis(start));
+ // console.log('start & end:', start, end);
+ // console.log('str2millis(end):', str2millis(end));
+ // console.log('str2millis(start):', str2millis(start));
 
   const restTime = (Number.isInteger(str2millis(end)) && Number.isInteger(str2millis(start))) ? (str2millis(end) - str2millis(start)) : false
 
-  console.log('restTime:', restTime);
+ // console.log('restTime:', restTime);
 
   if (restTime && restTime > MAX_DAYS_IN_SECONDS * 1000) {
     return false
