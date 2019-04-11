@@ -17,6 +17,11 @@ import { Credentials, Volvo, Savar } from '../imports/api/collections'
 //  400	Bad Request
 // 401	Unauthorized
 // Listen to incoming HTTP requests (can only be used on the server).
+
+// 1 dia = 86400 segundos
+
+const MAX_DAYS_IN_SECONDS = 1 * 86400
+
 WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
   const { username, password } = getCredentials(req)
@@ -26,7 +31,7 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
   if (username == 'volvo' && password == 'vlv_scrts_04_2019') {
 
     res.writeHead(200);
-
+    // VERIFICA SI HAY PARAMETROS EN EL QUERY
     const queries = Object.keys(req.query).length > 0 ? req.query : false
     if (queries) {
       // Se procesa query hacia Collection Volvo
@@ -34,18 +39,20 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
       // Respuesta hacia el cliente Web
       /************************* 3 PARAMETROS EN EL QUERY ***********************************/
       if (Object.keys(queries).length == 3 && queries.hasOwnProperty('vehicle') && queries.hasOwnProperty('start') && queries.hasOwnProperty('end')) {
-       // console.log('3', queries);
-       // res.end(JSON.stringify(queries))
+        // console.log('3', queries);
+        // res.end(JSON.stringify(queries))
 
         const vehicle = Array.isArray(queries.vehicle) ? false : queries.vehicle
         const start = Array.isArray(queries.start) ? false : queries.start
         const end = Array.isArray(queries.end) ? false : queries.end
 
-        if (vehicle && vehicle.length >= 4 && start && start.length == 19 && end && end.length == 19) {
+        // ==>
+
+
+        if (vehicle && vehicle.length >= 4 && start && start.length == 19 && end && end.length == 19 && verifyDays(start, end)) {
 
           Meteor.call('Volvo_getRangePlate', vehicle, start, end, function (error, range) {
             if (!error) {
-
               console.log('range', range);
               res.end(JSON.stringify(range))
             }
@@ -119,8 +126,28 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 
 
 // helper functions
+const verifyDays = (start, end) => {
+  console.log('verifyDays:');
+  
+  const addZ = str => str + '.000Z'
+  const str2millis = str => (new Date(str)).getTime()
+  start = addZ(start)
+  end = addZ(end)
 
+  console.log('start & end:', start, end);
+  
+  const restTime = (Number.isInteger(str2millis(end)) && Number.isInteger(str2millis(start))) ? (str2millis(end) - str2millis(start)) : false
+
+  console.log('restTime:',restTime);
+  
+  if (restTime && restTime > MAX_DAYS_IN_SECONDS * 1000) {
+    return false
+   }else{
+    return true
+   }
+}
 const atob = str => Buffer.from(str, 'base64').toString('binary');
+
 const getCredentials = str => {
   if (str && str.headers.authorization && str.headers.authorization.split(' ')[0] == 'Basic' && str.headers.authorization.split(' ')[1]) {
     let credentials = atob(str.headers.authorization.split(' ')[1])
