@@ -58,6 +58,9 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
             }
           });
 
+        } else {
+          res.writeHead(401);
+          res.end(`Unauthorized`)
         }
 
 
@@ -128,23 +131,25 @@ WebApp.connectHandlers.use('/api/1.0', (req, res, next) => {
 // helper functions
 const verifyDays = (start, end) => {
   console.log('verifyDays:');
-  
+
   const addZ = str => str + '.000Z'
   const str2millis = str => (new Date(str)).getTime()
   start = addZ(start)
   end = addZ(end)
 
   console.log('start & end:', start, end);
-  
+  console.log('str2millis(end):', str2millis(end));
+  console.log('str2millis(start):', str2millis(start));
+
   const restTime = (Number.isInteger(str2millis(end)) && Number.isInteger(str2millis(start))) ? (str2millis(end) - str2millis(start)) : false
 
-  console.log('restTime:',restTime);
-  
+  console.log('restTime:', restTime);
+
   if (restTime && restTime > MAX_DAYS_IN_SECONDS * 1000) {
     return false
-   }else{
+  } else {
     return true
-   }
+  }
 }
 const atob = str => Buffer.from(str, 'base64').toString('binary');
 
